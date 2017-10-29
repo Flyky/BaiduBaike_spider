@@ -12,7 +12,7 @@ class SpiderMain(object):
         self.outputer = result_outputer.ResultOutputer()
         
     
-    def craw(self, rootURL, times, htmlName):
+    def crawl(self, rootURL, times, htmlName):
         print(times)
         count = 1
         
@@ -20,7 +20,7 @@ class SpiderMain(object):
         while self.urls.has_next_url():
             try:
                 next_url = self.urls.get_next_url()
-                print('crawing no.%d: %s' %(count, next_url))
+                print('crawling no.%d: %s' %(count, next_url))
                 html_content = self.downloader.download(next_url)
                 new_urls, new_data = self.parser.parse(next_url, html_content)
                 self.urls.add_new_urls(new_urls)
@@ -32,10 +32,10 @@ class SpiderMain(object):
                 count = count + 1
             except Exception as e:
                 print('Error:', e)
-                print('crawing failed this time')
+                print('crawling failed this time')
             
         self.outputer.output_html(htmlName)
-        print('Crawing finished')
+        print('Crawling finished')
     
     
 
@@ -48,4 +48,4 @@ if __name__=='__main__':
     times = input("Please input the crawing deep times: ")
     outputHTML = input('Please input the name of the output file: ')
     objSpider = SpiderMain()
-    objSpider.craw(rootURL, times, outputHTML)
+    objSpider.crawl(rootURL, times, outputHTML)
